@@ -4,8 +4,11 @@ const { width, height } = Dimensions.get("window");
 
 export const COLORS = {
     // base colors
-    primary: "#F96D41",
-    secondary: "#25282F",
+    primary: "#2fa836",
+    primary2: "#84bb27",
+    primary3 : "#b6d999",
+    secondary : "#74b47c",
+    secondary2 : "#c4dcb4",
 
     // colors
     black: "#1E1B26",
@@ -24,6 +27,11 @@ export const COLORS = {
     lightGreen: "#31Ad66",
 
 };
+
+export const SCREEN={
+    width : Dimensions.get("window").width,
+    height : Dimensions.get("window").height
+}
 
 export const SIZES = {
     // global sizes
@@ -62,6 +70,6 @@ export const FONTS = {
     body4: {  fontSize: SIZES.body4, lineHeight: 22 },
 };
 
-const appTheme = { COLORS, SIZES, FONTS };
+const appTheme = { COLORS, SIZES, FONTS, SCREEN };
 
 export default appTheme;

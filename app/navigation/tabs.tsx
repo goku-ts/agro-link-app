@@ -9,19 +9,28 @@ import Profile from "../screens/Profile";
 import Settings from "../screens/Settings";
 import { scale } from "react-native-size-matters";
 
+import Seller from "../screens/Sellers/Seller";
+import { SmallHolderStackScreen, AggregatorStackScreen, CommercialStackScreen } from "./screensStack";
+
 const Tab = createBottomTabNavigator();
 
 
-
 const Tabs = () => {
+    const [userCategory, setUserCategory] = React.useState("small_holder")
+    React.useEffect(() => {
+       setUserCategory("aggregator")
+    }, [])
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
-                tabBarShowLabel: false,
+                tabBarShowLabel: true,
                 headerShown: false,
                 headerShadowVisible: false,
+                tabBarLabelStyle :{
+fontSize:15
+                },
                 tabBarStyle: {
-                    height: scale(50) ,
+                    height: scale(50),
                     paddingLeft: 10,
                     paddingRight: 10,
                     elevation: 0,
@@ -32,7 +41,7 @@ const Tabs = () => {
                     const tintColor = focused ? COLORS.black : COLORS.lightGray4;
 
                     switch (route.name) {
-                        case "Home2":
+                        case "Listings":
                             return (
                                 <Image
                                     source={icons.home_icon}
@@ -45,8 +54,8 @@ const Tabs = () => {
                                 />
                             )
 
-                    
-                        case "Settings":
+
+                        case "Inventory":
                             return (
                                 <Image
                                     source={icons.eng_icon}
@@ -59,9 +68,9 @@ const Tabs = () => {
                                 />
                             )
 
-                        
 
-                        case "User":
+
+                        case "Profile":
                             return (
                                 <Image
                                     source={icons.user_icon}
@@ -77,19 +86,31 @@ const Tabs = () => {
                 }
             })}
         >
+
             <Tab.Screen
-                name="Home2"
-                component={Home}
+                name="Listings"
+                component={
+                    userCategory === "small_holder" ?
+                        SmallHolderStackScreen :
+                        userCategory === "commercial" ?
+                            CommercialStackScreen :
+                            userCategory === "aggregator" ?
+                                AggregatorStackScreen :
+                                null
+                }
             />
+
             <Tab.Screen
-                name="Settings"
-                component={Settings}
-            />
-            <Tab.Screen
-                name="User"
+                name="Inventory"
                 component={Profile}
             />
-           
+            <Tab.Screen
+                name="Profile"
+                component={Settings}
+            />
+            
+
+
         </Tab.Navigator>
     )
 }

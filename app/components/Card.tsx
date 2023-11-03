@@ -8,12 +8,13 @@ import { COLORS, SIZES, FONTS } from '../constants';
 import { images } from '../constants';
 
 type CardType = {
-    image: any,
-    name: string
+    image?: any,
+    name: string,
+    onpress? : any
 }
-const Card: FC<CardType> = ({ image,name}) => {
+const Card: FC<CardType> = ({ image,name,onpress}) => {
     return (
-        <TouchableOpacity activeOpacity={0.8} style={styles.card}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.card} onPress={onpress}>
             <View style={styles.img_view}>
                 <Image source={image} style={styles.imageView} />
             </View>
