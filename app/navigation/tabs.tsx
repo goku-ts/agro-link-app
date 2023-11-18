@@ -3,7 +3,6 @@ import {
     Image
 } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../screens/Home";
 import { icons, COLORS } from "../constants";
 import Profile from "../screens/Profile";
 import Settings from "../screens/Settings";
@@ -16,10 +15,10 @@ const Tab = createBottomTabNavigator();
 
 
 const Tabs = () => {
-    const [userCategory, setUserCategory] = React.useState("small_holder")
-    React.useEffect(() => {
-       setUserCategory("aggregator")
-    }, [])
+    // const [userCategory, setUserCategory] = React.useState("small_holder")
+    // React.useEffect(() => {
+    //    setUserCategory("aggregator")
+    // }, [])
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -89,15 +88,7 @@ fontSize:15
 
             <Tab.Screen
                 name="Listings"
-                component={
-                    userCategory === "small_holder" ?
-                        SmallHolderStackScreen :
-                        userCategory === "commercial" ?
-                            CommercialStackScreen :
-                            userCategory === "aggregator" ?
-                                AggregatorStackScreen :
-                                null
-                }
+                component={SmallHolderStackScreen}
             />
 
             <Tab.Screen

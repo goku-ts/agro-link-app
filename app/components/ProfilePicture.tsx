@@ -1,6 +1,6 @@
 import React from "react"
 import {View,TouchableOpacity,Image, StyleSheet} from "react-native"
-import { images } from "../constants"
+import { COLORS, images } from "../constants"
 
 const ProfilePicture =()=>{
     return(
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         height:120,
         width:120,
         borderRadius:60,
-        backgroundColor:"gray",
+        backgroundColor:COLORS.primary,
         justifyContent : "center",
         alignItems:"center" ,
         marginBottom : 10

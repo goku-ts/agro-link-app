@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
-const { width, height } = Dimensions.get("window");
 
+import { StatusBar } from "expo-status-bar";
 
 export const COLORS = {
     // base colors
@@ -15,7 +15,7 @@ export const COLORS = {
     white: "#FFFFFF",
     lightGray: "#64676D",
     lightGray2: "#EFEFF0",
-    lightGray3: '#D4D5D6',
+    lightGray3: 'white',
     lightGray4: '#7D7E84',
     gray: "#2D3038",
     gray1: "#282C35",
@@ -29,8 +29,8 @@ export const COLORS = {
 };
 
 export const SCREEN={
-    width : Dimensions.get("window").width,
-    height : Dimensions.get("window").height
+    width : Dimensions.get("screen").width,
+    height : Dimensions.get("screen").height
 }
 
 export const SIZES = {
@@ -52,9 +52,7 @@ export const SIZES = {
     body3: 16,
     body4: 14,
 
-    // app dimensions
-    width,
-    height
+    
 };
 
 

@@ -2,6 +2,7 @@ import {TouchableOpacity,StyleSheet} from "react-native"
 import { Colors, fontSize } from "../../assets/assets"
 import { FC } from "react"
 import { Ionicons } from "@expo/vector-icons"
+import React from "react"
 
 type buttonType = {
     name : any

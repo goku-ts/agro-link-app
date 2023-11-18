@@ -7,6 +7,8 @@ import Aggregator from "../screens/Sellers/Aggregator"
 import Seller from "../screens/Sellers/Seller"
 import Register from "../screens/Auth/Register"
 import Login from "../screens/Auth/Login"
+import Profile from "../screens/Auth/Profile"
+
 
 // export const SellerStack = () => {
 
@@ -58,9 +60,10 @@ export const AuthStack = () => {
     const Stack = createStackNavigator()
 
     return (
-            <Stack.Navigator initialRouteName="login" screenOptions={{headerShown : false}}>
+            <Stack.Navigator initialRouteName="profile" screenOptions={{headerShown : false}}>
                 <Stack.Screen name="register" component={Register} />
                 <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="profile" component={Profile} />
             </Stack.Navigator>
     )
 }

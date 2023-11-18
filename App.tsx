@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Tabs from './app/navigation/tabs';
-import Home from './app/screens/Home';
-import Profile from './app/screens/Auth/Profile';
-import theme from './app/constants/theme';
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
@@ -23,22 +20,25 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
+    <>
+    <StatusBar barStyle="dark-content" backgroundColor={"white"}/>
     <NavigationContainer >
     <Stack.Navigator
         screenOptions={{
             headerShown: false
         }}
-        initialRouteName={'Home'}
+        initialRouteName={'Login'}
     >
         {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
-        <Stack.Screen name="Login" component={Profile} />
+        <Stack.Screen name="Login" component={AuthStack} />
 
         {/* Screens */}
          {/*  */}
         
     </Stack.Navigator>
-</NavigationContainer>
+</NavigationContainer></>
+
   );
 }
 

@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  StatusBar,
+  KeyboardAvoidingView,
+  ScrollView,
+  Image
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -19,7 +23,9 @@ import {
   FormInput,
   PasswordInput,
 } from "../../components/textInputs/TextInputs";
-import { SCREEN } from "../../constants/theme";
+import { COLORS, SCREEN } from "../../constants/theme";
+import { images } from "../../constants";
+
 
 const Register = ({ navigation }) => {
   const [submit, isSubmit] = useState(false);
@@ -35,9 +41,7 @@ const Register = ({ navigation }) => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     phone_number: Yup.number()
-      .required("Mobile Number is required")
-      .min(9, "Enter Valid Mobile Number")
-      .max(9, "Enter Valid Mobile Number"),
+      .required("Mobile Number is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
@@ -67,6 +71,7 @@ const Register = ({ navigation }) => {
 
   return (
     <>
+
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
 
@@ -76,57 +81,65 @@ const Register = ({ navigation }) => {
             onSubmit={handleSignup}
           >
             {({ handleChange, handleSubmit, values, errors }) => (
-              <View style={{ alignItems: "center" }}>
+              <View style={{}}>
                 {message && <Text style={[styles.errorText, { fontSize: 12 }]}>{message}</Text>}
-                <FormInput
-                  placeholder="Name"
-                  value={values.name}
-                  onChangeText={handleChange("name")}
-                  icon={"person-outline"}
-                />
 
-                {submit && errors.name && (
-                  <Text style={styles.errorText}>{errors.name}</Text>
-                )}
+                <ScrollView contentContainerStyle={{ alignItems: "center" }} showsVerticalScrollIndicator={false}>
+                  <View style={{ justifyContent: "center", alignItems: "center", height: SCREEN.height * 0.1 }}>
+                    <Image source={images.logo} />
+                  </View>
 
-                <FormInput
-                  placeholder="Mobile Number"
-                  value={values.phone_number}
-                  onChangeText={handleChange("email")}
-                  keyboardType="number-pad"
-                  icon={"mail-outline"}
-                  maxlength={9}
-                />
-                {submit && errors.phone_number && (
-                  <Text style={styles.errorText}>{errors.phone_number}</Text>
-                )}
+                  {submit && errors.name && (
+                    <Text style={styles.errorText}>{errors.name}</Text>
+                  )}
+                  <FormInput
+                    placeholder="Name"
+                    value={values.name}
+                    onChangeText={handleChange("name")}
+                  // type={"person-outline"}
+                  />
 
-                <PasswordInput
-                  placeholder="Password"
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                  secureTextEntry
-                  icon={"key-outline"}
-                />
-                {submit && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
+                  {submit && errors.phone_number && (
+                    <Text style={styles.errorText}>{errors.phone_number}</Text>
+                  )}
 
-                <PasswordInput
-                  placeholder="Confirm Password"
-                  value={values.confirmPassword}
-                  onChangeText={handleChange("confirmPassword")}
-                  secureTextEntry
-                  icon={"key-outline"}
-                />
-                {submit && errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                )}
+                  <FormInput
+                    placeholder="Mobile Number"
+                    value={values.phone_number}
+                    onChangeText={handleChange("phone_number")}
+                    keyboardType="number-pad"
+                    type={"phone"}
+                    maxlength={9}
+                  />
 
-                <SubmitButton name={"Register"} onPress={() => {
-                  isSubmit(true);
-                  handleSubmit();
-                }} />
+                  {submit && errors.password && (
+                    <Text style={styles.errorText}>{errors.password}</Text>
+                  )}
+                  <PasswordInput
+                    placeholder="Password"
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    secureTextEntry
+                  // icon={"key-outline"}
+                  />
+
+                  {submit && errors.confirmPassword && (
+                    <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                  )}
+                  <PasswordInput
+                    placeholder="Confirm Password"
+                    value={values.confirmPassword}
+                    onChangeText={handleChange("confirmPassword")}
+                    secureTextEntry
+                  // icon={"key-outline"}
+                  />
+
+
+                  <SubmitButton color={COLORS.primary} name={"Register"} onPress={() => {
+                    isSubmit(true);
+                    handleSubmit();
+                  }} />
+                </ScrollView>
               </View>
             )}
           </Formik>
@@ -134,14 +147,8 @@ const Register = ({ navigation }) => {
           <Text
             onPress={() => navigation.navigate("login", {})}
             style={styles.signInLink}>Already have an account? Sign in</Text>
-
-
         </View>
       </TouchableWithoutFeedback>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Powered By: </Text>
-        <Text >Eco Fly & Analytics</Text>
-      </View>
     </>
   );
 };
@@ -151,9 +158,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 16,
+    paddingTop: StatusBar.currentHeight,
+    //  marginTop : SCREEN.height * 0.1
   },
   errorText: {
-    fontSize: 10,
+    fontSize: 12,
     color: "red",
     marginBottom: 5,
   },

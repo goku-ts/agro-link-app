@@ -6,6 +6,9 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Image
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -17,6 +20,8 @@ import {
   FormInput,
   PasswordInput,
 } from "../../components/textInputs/TextInputs";
+import { COLORS, images } from "../../constants";
+import { SCREEN } from "../../constants/theme";
 
 const Login = ({ navigation, route }) => {
   const initialValues = {
@@ -56,54 +61,60 @@ const Login = ({ navigation, route }) => {
 
   return (
     <>
-      <View style={styles.container}>
-        {message && (
-          <Text style={[styles.errorText, { fontSize: 12 }]}>{message}</Text>
-        )}
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSignIn}
-        >
-          {({ handleChange, handleSubmit, handleBlur, values, errors }) => (
-            <View style={styles.fieldsandbutton}>
-              <FormInput
-                placeholder="Mobile Number"
-                value={values.phone_number}
-                onChangeText={handleChange("phone_number")}
-                onBlur={handleBlur("phone_number")}
-                keyboardType="number-pad"
-                icon={"person-outline"}
-              />
-              {submit && errors.phone_number && (
-                <Text style={styles.errorText}>{errors.phone_number}</Text>
-              )}
-              <PasswordInput
-                placeholder="Password"
-                value={values.password}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                icon={"key-outline"}
-              />
-
-              {submit && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-              <SubmitButton name={"Login"} onPress={() => {
-                isSubmit(true);
-                handleSubmit();
-              }} />
-            </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          {message && (
+            <Text style={[styles.errorText, { fontSize: 12 }]}>{message}</Text>
           )}
-        </Formik>
-        <TouchableOpacity onPress={() => navigation.navigate("register")}>
-          <Text style={styles.signUpLink}>Don't have an account? Sign up</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Powered By: </Text>
-        <Text >Eco Fly & Analytics</Text>
-      </View>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSignIn}
+          >
+            {({ handleChange, handleSubmit, handleBlur, values, errors }) => (
+              <View style={styles.fieldsandbutton}>
+                <View style={{ justifyContent: "center", alignItems: "center", height: SCREEN.height * 0.1 }}>
+                  <Image source={images.logo} />
+                </View>
+                {submit && errors.phone_number && (
+                  <Text style={styles.errorText}>{errors.phone_number}</Text>
+                )}
+                <FormInput
+                  placeholder="Mobile Number"
+                  value={values.phone_number}
+                  onChangeText={handleChange("phone_number")}
+                  onBlur={handleBlur("phone_number")}
+                  keyboardType="number-pad"
+                  type={"phone"}
+                // icon={"person-outline"}
+                />
+
+
+                {submit && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+                <PasswordInput
+                  placeholder="Password"
+                  value={values.password}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                // icon={"key-outline"}
+                />
+
+
+                <SubmitButton color={COLORS.primary} name={"Login"} onPress={() => {
+                  isSubmit(true);
+                  handleSubmit();
+                }} />
+              </View>
+            )}
+          </Formik>
+          <TouchableOpacity onPress={() => navigation.navigate("register")}>
+            <Text style={styles.signUpLink}>Don't have an account? Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+
     </>
   );
 };
@@ -174,14 +185,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   footer: {
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
-    marginBottom : 10
+    marginBottom: 10
   },
   footerText: {
-  fontWeight : "bold",
-  fontSize:15
+    fontWeight: "bold",
+    fontSize: 15
   }
 });
 

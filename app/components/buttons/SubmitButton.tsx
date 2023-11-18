@@ -9,13 +9,14 @@ type buttonType = {
     onPress? : any
 }
 
-export const SubmitButton : FC<buttonType> = ({ name, onPress }) =>{
+export const SubmitButton : FC<buttonType> = ({ name, onPress, color }) =>{
     return(
         <TouchableOpacity
         onPress={onPress}
-        style={styles.button}
+        style={[styles.button,{backgroundColor:color}]}
+        activeOpacity={0.8}
       >
-        <Text style={{fontSize:18,fontWeight:"bold"}}>{name}</Text>
+        <Text style={{fontSize:18,fontWeight:"bold",color:"white"}}>{name}</Text>
       </TouchableOpacity>
     )
 }
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
         width: SCREEN.width * 0.85,
         height: 60,
         borderRadius: 10,
-        borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 40,
