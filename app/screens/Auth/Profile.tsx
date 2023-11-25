@@ -18,22 +18,24 @@ import axios from "axios";
 
 import { SubmitButton } from "../../components/buttons/SubmitButton";
 import ProfilePicture from "../../components/ProfilePicture";
-import { ChoiceButton } from "../../components/buttons/ChoiceButton";
+
 import { PickerButtons } from "../../components/buttons/PickerButtons";
 import { Dropdown } from "../../components/buttons/Dropdown";
 
 import BottomSheet, { BottomSheetMethods } from '@devvie/bottom-sheet';
 
-import {
-    FormInput,
-} from "../../components/textInputs/TextInputs";
+
 import { COLORS, SCREEN } from "../../constants/theme";
 import images from "../../constants/images";
 import { FarmSize } from "../../components/textInputs/SizeInputBoxes";
-import { MultiTextInput } from "../../components/textInputs/MultiTextInput";
-import { LableText } from "../../components/texts/lableText";
+
 
 import { ScreenWrapper } from "../../components/ScreenWrapper";
+
+import MobileTextInput from "../../components/textInputs/MobileNumberInput";
+import RegularInput from "../../components/textInputs/RegularInput";
+import SegmentedButton from "../../components/buttons/SegmentedButton";
+import BigTextInput from "../../components/textInputs/BigTextInput";
 
 const Profile = ({ navigation, route }) => {
 
@@ -77,9 +79,9 @@ const Profile = ({ navigation, route }) => {
 
 
     const [submit, isSubmit] = useState(false);
-    const [choice, setChoice] = useState("buyer")
+    const [choice, setChoice] = useState("Buyer")
     const [selected, setSelected] = useState(buyer)
-    const [selectedCategory, setSelectedCategory] = useState<string>("buyer")
+    const [selectedCategory, setSelectedCategory] = useState<string>("Buyer")
     const [selectedRegion, setSelectedRegion] = useState("Choose Region")
     const [dropListTtype, setDropListType] = useState("region")
     const [selectedDocument, setSelectedDocument] = useState("Document Type")
@@ -142,6 +144,36 @@ const Profile = ({ navigation, route }) => {
     };
 
 
+    const buttons = [
+        {
+            value: 'Buyer',
+            label: 'Buyer',
+            onPress: () => { setSelected(buyer) },
+            checkedColor: "white",
+            style: choice === "Buyer" ? { backgroundColor: COLORS.primary } : COLORS.white,
+            labelStyle: { fontSize: 16, fontWeight: "bold" }
+        },
+        {
+            value: 'Seller',
+            label: 'Seller',
+            onPress: () => { setSelected(seller) },
+            checkedColor: "white",
+            style: choice === "Seller" ? { backgroundColor: COLORS.primary } : COLORS.white,
+            labelStyle: { fontSize: 16, fontWeight: "bold" }
+        },
+        {
+            value: 'Logistics',
+            label: 'Logistics',
+            onPress: () => { setSelected(logistics) },
+            checkedColor: "white",
+            style: choice === "Logistics" ? { backgroundColor: COLORS.primary } : COLORS.white,
+            labelStyle: { fontSize: 16, fontWeight: "bold" },
+            
+        },
+
+
+    ]
+
 
     const sheetRef = useRef<BottomSheetMethods>(null);
 
@@ -182,35 +214,8 @@ const Profile = ({ navigation, route }) => {
 
                                 <ProfilePicture />
 
-                                <View style={{}}>
-                                    {/* <LableText name={"I am a"}/> */}
-                                    <View style={{ flexDirection: "row" }}>
-                                        <ChoiceButton
-                                            name={"Buyer"}
-                                            // iconname={choice === "buyer" ? "checkmark-circle-outline" : null} 
-                                            backgroundColor={choice === "buyer" ? COLORS.primary : COLORS.lightGray3}
-                                            color={choice === "buyer" ? "white" : null}
-                                            weight={choice === "buyer" ? "bold" : null}
-                                            onPress={() => { setChoice("buyer"); setSelected(buyer) }}
-                                        />
-                                        <ChoiceButton
-                                            name={"Seller"}
-                                            // iconname={choice === "Seller" ? "checkmark-circle-outline" : null} 
-                                            backgroundColor={choice === "Seller" ? COLORS.primary : COLORS.lightGray3}
-                                            color={choice === "Seller" ? "white" : null}
-                                            weight={choice === "Seller" ? "bold" : null}
-                                            onPress={() => { setChoice("Seller"); setSelected(seller) }}
-                                        />
-                                        <ChoiceButton
-                                            name={"Logistics"}
-                                            // iconname={choice === "Logistics" ? "checkmark-circle-outline" : null} 
-                                            backgroundColor={choice === "Logistics" ? COLORS.primary : COLORS.lightGray3}
-                                            color={choice === "Logistics" ? "white" : null}
-                                            weight={choice === "Logistics" ? "bold" : null}
-                                            onPress={() => { setChoice("Logistics"); setSelected(logistics) }}
-                                        />
-                                    </View>
-                                </View>
+                                <SegmentedButton buttons={buttons} setValue={setChoice} value={choice} />
+
                                 {/* CATEGORY SECTION */}
                                 <View>
                                     {
@@ -231,16 +236,13 @@ const Profile = ({ navigation, route }) => {
                                 {submit && errors.contact && (
                                     <Text style={styles.errorText}>{errors.contact}</Text>
                                 )}
-                                <FormInput
-                                    placeholder="Enter Your Contact Number"
+                                <MobileTextInput
+                                    label="Enter Your Contact Number"
                                     value={values.contact}
                                     onChangeText={handleChange("contact")}
                                     onBlur={handleBlur("contact")}
-                                    keyboardType="number-pad"
-                                    type={"phone"}
-                                    label="Contact Number"
-                                    maxlength={9}
                                 />
+
 
                                 <Dropdown
                                     name={selectedRegion}
@@ -253,32 +255,33 @@ const Profile = ({ navigation, route }) => {
                                 {submit && errors.location && (
                                     <Text style={styles.errorText}>{errors.location}</Text>
                                 )}
-                                <FormInput
-                                    placeholder="Enter Farm Location"
+                                <RegularInput
+                                    label="Enter Farm Location"
                                     value={values.location}
                                     onChangeText={handleChange("location")}
                                     onBlur={handleBlur("location")}
-                                    label="Location"
-                                // icon={"key-outline"}
                                 />
+
 
                                 {/* SIZE INPUT */}
                                 <FarmSize
-                                    keyboardType={"numeric"}
                                     onChangeText={handleChange("farm_size_length")}
                                     onChangeText1={handleChange("farm_size_width")}
                                     value={values?.farm_size_length}
                                     value1={values?.farm_size_width}
                                     onBlur={handleBlur("farm_size_length")}
                                     onBlur1={handleBlur("farm_size_width")}
+                                    activeColor={"green"}
                                 />
 
-                                <MultiTextInput
-                                    placeholder="Crops Cultivated"
+                                <BigTextInput
+                                    label="Crops Cultivated"
                                     onBlur={handleBlur("crops_cultivated")}
                                     onChangeText={handleChange("crops_cultivated")}
                                     value={values.crops_cultivated}
+                                    activeColor="green"
                                 />
+
 
                                 <Dropdown
                                     name={selectedDocument}

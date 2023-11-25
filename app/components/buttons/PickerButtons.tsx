@@ -33,9 +33,9 @@ export const PickerButtons: FC<buttonType> = ({ name, onPress, weight="normal", 
 const styles = StyleSheet.create({
     button: {
         width: SCREEN.width * 0.85,
-        height: 50,
-        borderRadius: 10,
-        borderWidth: 0.5,
+        height: 40,
+        borderRadius: 5,
+        borderWidth: 0.2,
         justifyContent: "center",
         alignItems: "center",
         marginBottom:10

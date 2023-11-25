@@ -1,43 +1,27 @@
 import { StatusBar } from 'react-native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Tabs from './app/navigation/tabs';
+import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import Register from './app/screens/Auth/Register';
-import Login from './app/screens/Auth/Login';
-import { AuthStack } from './app/navigation/screensStack';
+import RootNavigation from './app/navigation/rootNavigation';
 
 
-type RootStackParamList = {
-  Home: undefined;
-  Login: undefined;
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
 };
-
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <>
-    <StatusBar barStyle="dark-content" backgroundColor={"white"}/>
-    <NavigationContainer >
-    <Stack.Navigator
-        screenOptions={{
-            headerShown: false
-        }}
-        initialRouteName={'Login'}
-    >
-        {/* Tabs */}
-        <Stack.Screen name="Home" component={Tabs} />
-        <Stack.Screen name="Login" component={AuthStack} />
+    <PaperProvider theme={theme} >
+      <RootNavigation />
+    </PaperProvider>
 
-        {/* Screens */}
-         {/*  */}
-        
-    </Stack.Navigator>
-</NavigationContainer></>
 
   );
 }
@@ -46,8 +30,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

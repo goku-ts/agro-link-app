@@ -19,6 +19,6 @@ export const ScreenWrapper = ({ children }) => {
 const styles = StyleSheet.create({
 container : {
     padding:20,
-   justifyContent:"flex-end"
+   justifyContent:"flex-end",
 }
 })

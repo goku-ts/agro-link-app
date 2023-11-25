@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   TouchableOpacity,
   StyleSheet,
@@ -14,7 +13,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
+import MobileTextInput from "../../components/textInputs/MobileNumberInput";
+import PasswordTextInput from "../../components/textInputs/PasswordInput";
+
 import { SubmitButton } from "../../components/buttons/SubmitButton";
+
+import { ScreenWrapper } from "../../components/ScreenWrapper";
 
 import {
   FormInput,
@@ -61,7 +65,7 @@ const Login = ({ navigation, route }) => {
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScreenWrapper>
         <View style={styles.container}>
           {message && (
             <Text style={[styles.errorText, { fontSize: 12 }]}>{message}</Text>
@@ -76,10 +80,8 @@ const Login = ({ navigation, route }) => {
                 <View style={{ justifyContent: "center", alignItems: "center", height: SCREEN.height * 0.1 }}>
                   <Image source={images.logo} />
                 </View>
-                {submit && errors.phone_number && (
-                  <Text style={styles.errorText}>{errors.phone_number}</Text>
-                )}
-                <FormInput
+
+                {/* <FormInput
                   placeholder="Mobile Number"
                   value={values.phone_number}
                   onChangeText={handleChange("phone_number")}
@@ -90,15 +92,37 @@ const Login = ({ navigation, route }) => {
                 />
 
 
-                {submit && errors.password && (
-                  <Text style={styles.errorText}>{errors.password}</Text>
-                )}
+
                 <PasswordInput
                   placeholder="Password"
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                 // icon={"key-outline"}
+                /> */}
+
+                {submit && errors.phone_number && (
+                  <Text style={styles.errorText}>{errors.phone_number}</Text>
+                )}
+
+                <MobileTextInput
+                  label="Mobile Number"
+                  value={values.phone_number}
+                  onChangeText={handleChange("phone_number")}
+                  onBlur={handleBlur("phone_number")}
+                  activeColor="green"
+                  outlineColor={errors.phone_number? "red" : null}
+                />
+
+                {submit && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+                <PasswordTextInput
+                  label="Password"
+                  value={values.password}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  activeColor="green"
                 />
 
 
@@ -113,8 +137,7 @@ const Login = ({ navigation, route }) => {
             <Text style={styles.signUpLink}>Don't have an account? Sign up</Text>
           </TouchableOpacity>
         </View>
-      </TouchableWithoutFeedback>
-
+      </ScreenWrapper>
     </>
   );
 };
@@ -122,9 +145,7 @@ const Login = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    alignItems: "center",
+    marginTop: SCREEN.height * 0.1
   },
   input: {
     width: 300,

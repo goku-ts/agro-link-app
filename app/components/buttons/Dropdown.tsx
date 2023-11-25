@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 
         width: SCREEN.width * 0.85,
         height: 50,
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 0.5,
         justifyContent: "center",
         marginTop: 1,

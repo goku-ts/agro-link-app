@@ -26,8 +26,8 @@ export const SubmitButton : FC<buttonType> = ({ name, onPress, color }) =>{
 const styles = StyleSheet.create({
     button: {
         width: SCREEN.width * 0.85,
-        height: 60,
-        borderRadius: 10,
+        height: 50,
+        borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 40,

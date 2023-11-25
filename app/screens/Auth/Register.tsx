@@ -19,13 +19,17 @@ import axios from "axios";
 
 import { SubmitButton } from "../../components/buttons/SubmitButton";
 
-import {
-  FormInput,
-  PasswordInput,
-} from "../../components/textInputs/TextInputs";
+
+import RegularInput from "../../components/textInputs/RegularInput";
+import MobileTextInput from "../../components/textInputs/MobileNumberInput";
+import PasswordTextInput from "../../components/textInputs/PasswordInput";
+
+
+
 import { COLORS, SCREEN } from "../../constants/theme";
 import { images } from "../../constants";
 
+import { ScreenWrapper } from "../../components/ScreenWrapper";
 
 const Register = ({ navigation }) => {
   const [submit, isSubmit] = useState(false);
@@ -71,8 +75,8 @@ const Register = ({ navigation }) => {
 
   return (
     <>
+      <ScreenWrapper>
 
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
 
           <Formik
@@ -92,47 +96,47 @@ const Register = ({ navigation }) => {
                   {submit && errors.name && (
                     <Text style={styles.errorText}>{errors.name}</Text>
                   )}
-                  <FormInput
-                    placeholder="Name"
+                  <RegularInput
+                    label="Name"
                     value={values.name}
                     onChangeText={handleChange("name")}
-                  // type={"person-outline"}
+                    outlineColor={errors.name ? "red" : null}
                   />
+
 
                   {submit && errors.phone_number && (
                     <Text style={styles.errorText}>{errors.phone_number}</Text>
                   )}
 
-                  <FormInput
-                    placeholder="Mobile Number"
+                  <MobileTextInput
+                    label="Mobile Number"
                     value={values.phone_number}
                     onChangeText={handleChange("phone_number")}
-                    keyboardType="number-pad"
-                    type={"phone"}
-                    maxlength={9}
+                    outlineColor={errors.phone_number ? "red" : null}
                   />
+
 
                   {submit && errors.password && (
                     <Text style={styles.errorText}>{errors.password}</Text>
                   )}
-                  <PasswordInput
-                    placeholder="Password"
+                  <PasswordTextInput
+                    label="Password"
                     value={values.password}
                     onChangeText={handleChange("password")}
-                    secureTextEntry
-                  // icon={"key-outline"}
+                    outlineColor={errors.password ? "red" : null}
                   />
+
 
                   {submit && errors.confirmPassword && (
                     <Text style={styles.errorText}>{errors.confirmPassword}</Text>
                   )}
-                  <PasswordInput
-                    placeholder="Confirm Password"
+                  <PasswordTextInput
+                    label="Confirm Password"
                     value={values.confirmPassword}
                     onChangeText={handleChange("confirmPassword")}
-                    secureTextEntry
-                  // icon={"key-outline"}
+                    outlineColor={errors.password ? "red" : null}
                   />
+
 
 
                   <SubmitButton color={COLORS.primary} name={"Register"} onPress={() => {
@@ -148,7 +152,7 @@ const Register = ({ navigation }) => {
             onPress={() => navigation.navigate("login", {})}
             style={styles.signInLink}>Already have an account? Sign in</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </ScreenWrapper>
     </>
   );
 };
@@ -156,8 +160,8 @@ const Register = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 16,
+
+
     paddingTop: StatusBar.currentHeight,
     //  marginTop : SCREEN.height * 0.1
   },
