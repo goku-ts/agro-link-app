@@ -4,12 +4,7 @@ import {
     Text,
     FlatList,
     StyleSheet,
-    TouchableWithoutFeedback,
-    Keyboard,
-    KeyboardAvoidingView,
-    ScrollView,
     Image,
-    StatusBar,
     TouchableOpacity
 } from "react-native";
 import { Formik } from "formik";
@@ -29,6 +24,7 @@ import { COLORS, SCREEN } from "../../constants/theme";
 import images from "../../constants/images";
 import { FarmSize } from "../../components/textInputs/SizeInputBoxes";
 
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { ScreenWrapper } from "../../components/ScreenWrapper";
 
@@ -36,6 +32,7 @@ import MobileTextInput from "../../components/textInputs/MobileNumberInput";
 import RegularInput from "../../components/textInputs/RegularInput";
 import SegmentedButton from "../../components/buttons/SegmentedButton";
 import BigTextInput from "../../components/textInputs/BigTextInput";
+import { pickImage } from "../../components/ImagePicker";
 
 const Profile = ({ navigation, route }) => {
 
@@ -103,6 +100,8 @@ const Profile = ({ navigation, route }) => {
     const [message, setMessage] = useState();
 
 
+    const [image, setImage] = useState(null)
+
 
     const validationSchema = Yup.object({
         contact: Yup.string()
@@ -168,7 +167,7 @@ const Profile = ({ navigation, route }) => {
             checkedColor: "white",
             style: choice === "Logistics" ? { backgroundColor: COLORS.primary } : COLORS.white,
             labelStyle: { fontSize: 16, fontWeight: "bold" },
-            
+
         },
 
 
@@ -193,6 +192,39 @@ const Profile = ({ navigation, route }) => {
         )
     }
 
+    const uploadOptions = [
+        {
+            option: "Upload Image",
+            icon: "image-outline"
+        }, {
+            option: "Take Photo",
+            icon: "camera-outline"
+        }, {
+            option: "Remove Photo",
+            icon: "remove-circle-outline"
+        }]
+
+    const ImageUplodOptios = ({ name, icon, onPress }) => {
+        return (
+            <>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={onPress}
+                    style={{
+                        height: 100,
+                        width: 100,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 10,
+
+                    }}>
+                    <Ionicons name={icon} size={80} />
+                    <Text style={{ fontWeight: "bold" }}>{name}</Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
     return (
         <>
             <ScreenWrapper>
@@ -212,7 +244,7 @@ const Profile = ({ navigation, route }) => {
 
                             <View style={{ alignItems: "center", marginBottom: 50 }}>
 
-                                <ProfilePicture />
+                                <ProfilePicture image={image} onPress={() => { sheetRef.current.open(); setDropListType("uploadOptions") }} />
 
                                 <SegmentedButton buttons={buttons} setValue={setChoice} value={choice} />
 
@@ -299,7 +331,7 @@ const Profile = ({ navigation, route }) => {
                     )}
                 </Formik>
             </ScreenWrapper>
-            <BottomSheet ref={sheetRef} height={SCREEN.height * 0.4}>
+            <BottomSheet ref={sheetRef} height={SCREEN.height * 0.3}>
                 {dropListTtype == "region" && <FlatList
                     data={region}
                     renderItem={({ item }) =>
@@ -318,6 +350,32 @@ const Profile = ({ navigation, route }) => {
                         />
                     }
                 />}
+                {dropListTtype === "uploadOptions" &&
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                        alignItems: "center"
+                    }}>
+                        <ImageUplodOptios
+                            name={uploadOptions[0].option}
+                            icon={uploadOptions[0].icon} 
+                            onPress={() => { sheetRef.current.close() ; pickImage(setImage) }}
+                      
+                        />
+                        <ImageUplodOptios
+                            name={uploadOptions[1].option}
+                            icon={uploadOptions[1].icon}
+                            onPress={() => { sheetRef.current.close() ; pickImage(setImage, "camera") }}
+                            
+                        />
+                        <ImageUplodOptios
+                            name={uploadOptions[2].option}
+                            icon={uploadOptions[2].icon}
+                            onPress={() => { sheetRef.current.close() ; setImage(null) }}
+                
+                        />
+                    </View>
+                }
             </BottomSheet>
             {/* </ScrollView> */}
         </>
