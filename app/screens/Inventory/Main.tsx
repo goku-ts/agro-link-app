@@ -4,15 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { COLORS } from '../../constants';
 
 
-const Aggregator=() => {
+const Inventory=() => {
   return (
   <View style={styles.container}>
-    <Text>Aggregator</Text>
+    <Text>Inventory</Text>
   </View>
   );
 }
 
-export default Aggregator
+export default Inventory
 
 const styles = StyleSheet.create({
   container: {

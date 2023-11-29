@@ -1,49 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Image
 } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { icons, COLORS } from "../constants";
-import Profile from "../screens/Profile";
+import { icons, COLORS, SIZES } from "../constants";
+import PrrofileScreen from "../screens/Profile";
 import Settings from "../screens/Settings";
 import { scale } from "react-native-size-matters";
 
-import Seller from "../screens/Sellers/Seller";
-import { SmallHolderStackScreen, AggregatorStackScreen, CommercialStackScreen } from "./screensStack";
+import { InventoryStackScreens, MarketplaceStackScreens,ScanStackScreens,ServiceStackScreens } from "./screensStack";
 
 const Tab = createBottomTabNavigator();
 
 
 const Tabs = () => {
-    // const [userCategory, setUserCategory] = React.useState("small_holder")
+    const [userCategory, setUserCategory] = useState("buyer")
     // React.useEffect(() => {
     //    setUserCategory("aggregator")
     // }, [])
+
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarShowLabel: true,
                 headerShown: false,
                 headerShadowVisible: false,
-                tabBarLabelStyle :{
-fontSize:15
+                tabBarActiveTintColor: COLORS.primary,
+                tabBarLabelStyle: {
+                    fontSize: 13,
+                    fontWeight: "bold"
                 },
                 tabBarStyle: {
-                    height: scale(50),
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    elevation: 0,
-                    shadowOpacity: 0,
+                    // height: scale(SCREEN.height * 0.08),
+                    // paddingLeft: 10,
+                    // paddingRight: 10,
+                    paddingTop : 5,
                     borderTopWidth: 0.5,
+                    backgroundColor: COLORS.lightGray2,
                 },
                 tabBarIcon: ({ focused }) => {
-                    const tintColor = focused ? COLORS.black : COLORS.lightGray4;
+                    const tintColor = focused ? COLORS.primary : COLORS.lightGray4;
 
                     switch (route.name) {
-                        case "Listings":
+                        case "Market":
                             return (
                                 <Image
-                                    source={icons.home_icon}
+                                    source={icons.market_icon}
                                     resizeMode="contain"
                                     style={{
                                         tintColor: tintColor,
@@ -53,11 +56,24 @@ fontSize:15
                                 />
                             )
 
+
+                        case "Services":
+                            return (
+                                <Image
+                                    source={icons.services_icon}
+                                    resizeMode="contain"
+                                    style={{
+                                        tintColor: tintColor,
+                                        width: 25,
+                                        height: 25
+                                    }}
+                                />
+                            )
 
                         case "Inventory":
                             return (
                                 <Image
-                                    source={icons.eng_icon}
+                                    source={icons.inventory_icon}
                                     resizeMode="contain"
                                     style={{
                                         tintColor: tintColor,
@@ -67,6 +83,18 @@ fontSize:15
                                 />
                             )
 
+                        case "Scan":
+                            return (
+                                <Image
+                                    source={icons.scan_icon}
+                                    resizeMode="contain"
+                                    style={{
+                                        tintColor: tintColor,
+                                        width: 25,
+                                        height: 25
+                                    }}
+                                />
+                            )
 
 
                         case "Profile":
@@ -87,19 +115,33 @@ fontSize:15
         >
 
             <Tab.Screen
-                name="Listings"
-                component={SmallHolderStackScreen}
+                name="Market"
+                component={MarketplaceStackScreens}
             />
 
             <Tab.Screen
-                name="Inventory"
-                component={Profile}
+                name="Services"
+                component={ServiceStackScreens}
             />
+
+
+
+            {userCategory === "buyer" ? <Tab.Screen
+                name="Scan"
+                component={ScanStackScreens}
+            /> :
+                <Tab.Screen
+                    name="Inventory"
+                    component={InventoryStackScreens}
+                />
+            }
+
+
             <Tab.Screen
                 name="Profile"
-                component={Settings}
+                component={PrrofileScreen}
             />
-            
+
 
 
         </Tab.Navigator>

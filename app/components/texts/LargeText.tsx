@@ -1,4 +1,4 @@
-import {Text,StyleSheet} from "react-native"
+import {Text,StyleSheet, Platform} from "react-native"
 import { COLORS } from "../../constants"
 import { FC } from "react"
 import React from "react"
@@ -18,6 +18,9 @@ export const LargeText : FC<largeTextType> = ({color = COLORS.black,text }) =>{
 
 const styles = StyleSheet.create({
    largetext:{
-    fontSize : 20
+    fontSize : 20,
+    fontWeight:"bold",
+    marginTop : Platform.OS === "ios" ? -3 : -5,
+    flexWrap :"wrap"
    }
 })

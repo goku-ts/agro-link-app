@@ -25,7 +25,7 @@ export default function RootNavigation() {
         screenOptions={{
             headerShown: false
         }}
-        initialRouteName={'Login'}
+        initialRouteName={'Home'}
     >
         {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />

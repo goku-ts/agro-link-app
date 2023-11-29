@@ -1,15 +1,16 @@
 
 import React from "react"
-import { KeyboardAvoidingView, SafeAreaView, ScrollView, Platform,StyleSheet } from "react-native"
+import { KeyboardAvoidingView, SafeAreaView, ScrollView, Platform, StyleSheet, View } from "react-native"
 import { COLORS } from "../constants"
 
-export const ScreenWrapper = ({ children }) => {
+export const Wrapper = ({ children }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
             <KeyboardAvoidingView keyboardVerticalOffset={0} style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
+                <View style={styles.container}>
                     {children}
-                </ScrollView>
+                </View>
+
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
@@ -17,7 +18,7 @@ export const ScreenWrapper = ({ children }) => {
 }
 
 const styles = StyleSheet.create({
-container : {
- margin : 10,
-}
+    container: {
+        margin: 10,
+    }
 })

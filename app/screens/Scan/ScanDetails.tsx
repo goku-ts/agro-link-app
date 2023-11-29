@@ -4,15 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { COLORS } from '../../constants';
 
 
-const Small=() => {
+const ScanDetails=() => {
   return (
   <View style={styles.container}>
-    <Text>Small</Text>
+    <Text>Scan Details</Text>
   </View>
   );
 }
 
-export default Small
+export default ScanDetails
 
 const styles = StyleSheet.create({
   container: {

@@ -1,18 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS } from '../../../constants';
 
 
-const PrrofileScreen=() => {
+const AddInventory=() => {
   return (
   <View style={styles.container}>
-    <Text>Prrofile Screen</Text>
+    <Text>Add Inventory</Text>
   </View>
   );
 }
 
-export default PrrofileScreen
+export default AddInventory
 
 const styles = StyleSheet.create({
   container: {
